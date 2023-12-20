@@ -48,4 +48,7 @@ dependencies {
 //    View Model
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
+
+//    Glide library
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 }
