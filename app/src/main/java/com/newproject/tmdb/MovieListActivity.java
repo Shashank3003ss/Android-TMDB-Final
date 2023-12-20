@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.newproject.tmdb.adapters.MovieRecyclerView;
 import com.newproject.tmdb.adapters.OnMovieListener;
@@ -52,7 +53,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
         ConfigureRecyclerView();
         ObserveAnyChange();
-        searchMovieApi("and", 1);
+        searchMovieApi("Bean", 1);
 
     }
 
@@ -87,6 +88,8 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     @Override
     public void onMovieClick(int position) {
 
+        Toast.makeText(this, "The position " + position, Toast.LENGTH_SHORT).show();
+        
     }
 
     @Override

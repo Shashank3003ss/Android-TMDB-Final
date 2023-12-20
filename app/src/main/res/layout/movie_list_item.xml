@@ -10,10 +10,10 @@
         android:layout_height="wrap_content"
         android:background="@color/cardview_shadow_start_color"
         android:id="@+id/card_view"
-        android:elevation="10dp"
-        android:layout_margin="8dp"
-        cardCornerRadius="8dp"
-        cardElevation="5dp"
+        android:elevation="20dp"
+        android:layout_margin="10dp"
+        cardCornerRadius="15dp"
+        cardElevation="15dp"
         cardUseCompatPadding="true">
 
         <LinearLayout
@@ -74,10 +74,13 @@
             </LinearLayout>
 
             <RatingBar
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rating_bar"
                 android:numStars="5"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:layout_gravity="start"
                 android:layout_margin="10dp"/>
 
         </LinearLayout>

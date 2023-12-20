@@ -11,7 +11,7 @@ public class MovieModel implements Parcelable {
 
 //    Model class for movies
     private String title;
-    private String poster_path;
+    private String backdrop_path;
     private String release_date;
 
     @SerializedName("id")
@@ -24,10 +24,10 @@ public class MovieModel implements Parcelable {
     private String original_language;
 
 //    Constructor
-    public MovieModel(String title, String poster_path, String release_date, int movie_id, float vote_average, String movie_overview,
+    public MovieModel(String title, String backdrop_path, String release_date, int movie_id, float vote_average, String movie_overview,
          String original_language, int runtime, int vote_count) {
         this.title = title;
-        this.poster_path = poster_path;
+        this.backdrop_path = backdrop_path;
         this.release_date = release_date;
         this.movie_id = movie_id;
         this.vote_average = vote_average;
@@ -39,7 +39,7 @@ public class MovieModel implements Parcelable {
 
     protected MovieModel(Parcel in) {
         title = in.readString();
-        poster_path = in.readString();
+        backdrop_path = in.readString();
         release_date = in.readString();
         movie_id = in.readInt();
         vote_average = in.readFloat();
@@ -66,8 +66,8 @@ public class MovieModel implements Parcelable {
         return title;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getBackdrop_path() {
+        return backdrop_path;
     }
 
     public String getRelease_date() {
@@ -104,7 +104,7 @@ public class MovieModel implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeString(poster_path);
+        dest.writeString(backdrop_path);
         dest.writeString(release_date);
         dest.writeInt(movie_id);
         dest.writeInt(runtime);
@@ -119,7 +119,7 @@ public class MovieModel implements Parcelable {
     public String toString() {
         return "MovieModel{" +
                 "title='" + title + '\'' +
-                ", poster_path='" + poster_path + '\'' +
+                ", background_path='" + backdrop_path + '\'' +
                 ", release_date='" + release_date + '\'' +
                 ", movie_id=" + movie_id +
                 ", vote_count=" + vote_count +

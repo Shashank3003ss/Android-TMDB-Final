@@ -60,7 +60,7 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             // Load image using Glide
             if (movieViewHolder.imageView != null) {
                 Glide.with(movieViewHolder.itemView.getContext())
-                        .load("https://image.tmdb.org/t/p/w500/" + currentMovie.getPoster_path())
+                        .load("https://image.tmdb.org/t/p/original/" + currentMovie.getBackdrop_path())
                         .into(movieViewHolder.imageView);
             }
         }
