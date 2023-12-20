@@ -12,7 +12,7 @@ import com.newproject.tmdb.R;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView title, release_date, duration;
+    TextView title, movie_category, duration;
     ImageView imageView;
     RatingBar ratingBar;
 
@@ -23,7 +23,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         super(itemView);
 
         title = itemView.findViewById(R.id.movie_title);
-        release_date = itemView.findViewById(R.id.release_date);
+        movie_category = itemView.findViewById(R.id.movie_category);
         duration = itemView.findViewById(R.id.movie_duration);
 
         imageView = itemView.findViewById(R.id.movie_img);

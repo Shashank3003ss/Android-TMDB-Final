@@ -52,7 +52,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
         ConfigureRecyclerView();
         ObserveAnyChange();
-        searchMovieApi("Fast", 1);
+        searchMovieApi("and", 1);
 
     }
 
@@ -65,7 +65,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
                 // Observing for any data change
                 if (movieModels != null) {
                     for (MovieModel movieModel : movieModels) {
-                        Log.v("Tag", "onChanged " + movieModel.getTitle());
+                        Log.v("Tag", "Name: " + movieModel.getTitle());
                         movieRecyclerViewAdapter.setmMovies(movieModels);
                     }
                 }

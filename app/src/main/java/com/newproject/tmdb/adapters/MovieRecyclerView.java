@@ -31,20 +31,39 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof MovieViewHolder){
+            MovieModel currentMovie = mMovies.get(position);
+            MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
 
-        ((MovieViewHolder)holder).title.setText(mMovies.get(i).getTitle());
-        ((MovieViewHolder)holder).release_date.setText(mMovies.get(i).getRelease_date());
+            if (currentMovie != null) {
+                // Set movie title
+                if (movieViewHolder.title != null) {
+                    movieViewHolder.title.setText(currentMovie.getTitle());
+                }
 
-        ((MovieViewHolder)holder).duration.setText(""+mMovies.get(i).getRuntime());
+                // Set release date
+                if (movieViewHolder.movie_category != null) {
+                    movieViewHolder.movie_category.setText("" + currentMovie.getRelease_date());
+                }
 
-        ((MovieViewHolder)holder).ratingBar.setRating((mMovies.get(i).getVote_average())/2);
+                // Set duration
+                if (movieViewHolder.duration != null) {
+                    movieViewHolder.duration.setText(" " + currentMovie.getMovie_id());
+                }
 
-//        Image View using glide library
-        Glide.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/p/w500/"
-                        + mMovies.get(i).getPoster_path())
-                .into(((MovieViewHolder)holder).imageView);
+                // Set rating
+                if (movieViewHolder.ratingBar != null) {
+                    movieViewHolder.ratingBar.setRating((currentMovie.getVote_average()) / 2);
+                }
+            }
+            // Load image using Glide
+            if (movieViewHolder.imageView != null) {
+                Glide.with(movieViewHolder.itemView.getContext())
+                        .load("https://image.tmdb.org/t/p/w500/" + currentMovie.getPoster_path())
+                        .into(movieViewHolder.imageView);
+            }
+        }
 
     }
 

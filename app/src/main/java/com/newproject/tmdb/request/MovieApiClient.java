@@ -59,7 +59,7 @@ public class MovieApiClient {
         }, 3000, TimeUnit.MILLISECONDS);
     }
 
-    //Retreving data from RestApi by runnable class
+    //Retrieving data from RestApi by runnable class
     private class RetriveMoviesRunnable implements Runnable {
 
         private String query;
