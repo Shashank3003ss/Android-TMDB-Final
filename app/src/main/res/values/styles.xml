@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#212AE9</color>
+    <color name="colorAccent">#1BDE90</color>
+    <color name="grey_background">#444444</color>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Customize the color of the text inside the SearchView -->
+        <item name="android:editTextColor">@android:color/white</item>
+        <!-- Customize the color of the hint text inside the SearchView -->
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <!-- Customize the close (X) icon color -->
+        <item name="closeIconTint">@android:color/white</item>
+        <!-- Customize the search icon color -->
+        <item name="android:searchIcon">@drawable/search</item> <!-- Replace with your search icon -->
+        <!-- Customize the background of the SearchView -->
+        <item name="android:background">@color/grey_background</item>
+    </style>
+</resources>

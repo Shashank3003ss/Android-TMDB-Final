@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MovieModel implements Parcelable {
@@ -13,21 +14,33 @@ public class MovieModel implements Parcelable {
     private String title;
     private String backdrop_path;
     private String release_date;
+    private String poster_path;
 
     @SerializedName("id")
     private int movie_id;
-    @SerializedName("vote")
-    private int vote_count;
+
+    @SerializedName("vote_average")
     private float vote_average;
+
+    @SerializedName("vote_count")
+    private int vote_count;
+
+
+    @SerializedName("overview")
     private String movie_overview;
+
+    @SerializedName("runtime")
     private int runtime;
+
+    @SerializedName("original_language")
     private String original_language;
 
 //    Constructor
     public MovieModel(String title, String backdrop_path, String release_date, int movie_id, float vote_average, String movie_overview,
-         String original_language, int runtime, int vote_count) {
+         String original_language, int runtime, int vote_count, String poster_path) {
         this.title = title;
         this.backdrop_path = backdrop_path;
+        this.poster_path = poster_path;
         this.release_date = release_date;
         this.movie_id = movie_id;
         this.vote_average = vote_average;
@@ -40,6 +53,7 @@ public class MovieModel implements Parcelable {
     protected MovieModel(Parcel in) {
         title = in.readString();
         backdrop_path = in.readString();
+        poster_path = in.readString();
         release_date = in.readString();
         movie_id = in.readInt();
         vote_average = in.readFloat();
@@ -96,6 +110,10 @@ public class MovieModel implements Parcelable {
         return vote_count;
     }
 
+    public String getPoster_path() {
+        return poster_path;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -105,6 +123,7 @@ public class MovieModel implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(backdrop_path);
+        dest.writeString(poster_path);
         dest.writeString(release_date);
         dest.writeInt(movie_id);
         dest.writeInt(runtime);
@@ -119,8 +138,9 @@ public class MovieModel implements Parcelable {
     public String toString() {
         return "MovieModel{" +
                 "title='" + title + '\'' +
-                ", background_path='" + backdrop_path + '\'' +
+                ", backdrop_path='" + backdrop_path + '\'' +
                 ", release_date='" + release_date + '\'' +
+                ", poster_path='" + poster_path + '\'' +
                 ", movie_id=" + movie_id +
                 ", vote_count=" + vote_count +
                 ", vote_average=" + vote_average +

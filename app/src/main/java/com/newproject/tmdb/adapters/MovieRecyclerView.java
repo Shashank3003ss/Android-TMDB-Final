@@ -49,7 +49,7 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 // Set duration
                 if (movieViewHolder.duration != null) {
-                    movieViewHolder.duration.setText(" " + currentMovie.getMovie_id());
+                    movieViewHolder.duration.setText(" " + currentMovie.getMovie_overview());
                 }
 
                 // Set rating
@@ -84,4 +84,14 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.mMovies = mMovies;
         notifyDataSetChanged();
     }
+
+    public MovieModel getSelectedMovie(int position){
+        if (mMovies != null){
+            if (mMovies.size() > 0){
+                return mMovies.get(position);
+            }
+        }
+        return null;
+    }
+
 }
