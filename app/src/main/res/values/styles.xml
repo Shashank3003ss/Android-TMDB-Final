@@ -13,6 +13,12 @@
     <color name="colorAccent">#1BDE90</color>
     <color name="grey_background">#444444</color>
 
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Customize search icon -->
+        <item name="android:searchIcon">@drawable/custom_search_icon</item>
+        <!-- Other SearchView customizations -->
+    </style>
+
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!-- Customize the color of the text inside the SearchView -->
         <item name="android:editTextColor">@android:color/white</item>
@@ -21,8 +27,6 @@
         <!-- Customize the close (X) icon color -->
         <item name="closeIconTint">@android:color/white</item>
         <!-- Customize the search icon color -->
-        <item name="android:searchIcon">@drawable/search</item> <!-- Replace with your search icon -->
-        <!-- Customize the background of the SearchView -->
         <item name="android:background">@color/grey_background</item>
     </style>
 </resources>

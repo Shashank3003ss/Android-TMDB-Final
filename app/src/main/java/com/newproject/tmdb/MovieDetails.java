@@ -15,7 +15,7 @@ import com.newproject.tmdb.models.MovieModel;
 public class MovieDetails extends AppCompatActivity {
 
     private ImageView imageViewDetails;
-    private TextView titleDetails, overviewDetails, vote, OD;
+    private TextView titleDetails, overviewDetails, vote, OD, Pop;
     private RatingBar ratingBarDetails;
 
     @SuppressLint("MissingInflatedId")
@@ -28,6 +28,7 @@ public class MovieDetails extends AppCompatActivity {
         titleDetails = findViewById(R.id.textView_title_details);
         overviewDetails = findViewById(R.id.textView_desc_details);
         ratingBarDetails = findViewById(R.id.ratingBar_details);
+        float rating = ratingBarDetails.getRating();
         vote = findViewById(R.id.textViewVote);
         OD = findViewById(R.id.textViewOD);
 
@@ -39,18 +40,23 @@ public class MovieDetails extends AppCompatActivity {
         if (getIntent().hasExtra("movie")){
             MovieModel movieModel = getIntent().getParcelableExtra("movie");
 
-            titleDetails.setText(movieModel.getTitle());
-            overviewDetails.setText("Runtime : " +movieModel.getRuntime()+"mins");
-            vote.setText("Vote count : "+ movieModel.getVote_count());
+            if (movieModel != null){
+                titleDetails.setText(movieModel.getTitle());
 
-            OD.setText(" " + movieModel.getMovie_overview());
+                overviewDetails.setText("Runtime : " +movieModel.getRuntime()+"mins");
+                vote.setText("Vote count : "+ movieModel.getVote_count());
 
-            Log.v("Tag", "X" + movieModel.getMovie_overview());
+                OD.setText(" " + movieModel.getMovie_overview());
 
-            Glide.with(this)
-                    .load("https://image.tmdb.org/t/p/original/"
-                            + movieModel.getPoster_path())
-                    .into(imageViewDetails);
+//            Log.v("Tag", "X" + movieModel.getMovie_overview());
+
+                Glide.with(this)
+                        .load("https://image.tmdb.org/t/p/original/"
+                                + movieModel.getPoster_path())
+                        .into(imageViewDetails);
+            }
+
+
 
         }
 

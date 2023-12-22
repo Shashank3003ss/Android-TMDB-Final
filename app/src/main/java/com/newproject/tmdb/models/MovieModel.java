@@ -37,7 +37,7 @@ public class MovieModel implements Parcelable {
 
 //    Constructor
     public MovieModel(String title, String backdrop_path, String release_date, int movie_id, float vote_average, String movie_overview,
-         String original_language, int runtime, int vote_count, String poster_path) {
+         String original_language, int runtime, int vote_count, String poster_path, int popularity) {
         this.title = title;
         this.backdrop_path = backdrop_path;
         this.poster_path = poster_path;
