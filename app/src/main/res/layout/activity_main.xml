@@ -10,13 +10,14 @@
     <!-- Adding the toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="2dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1"
@@ -29,7 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:queryHint="Looking for a movie?"
-            android:theme="@style/CustomSearchViewStyle"/>
+            android:background="@drawable/searchview_bg"
+            android:padding="8dp"
+            app:iconifiedByDefault="false" />
 
     </androidx.appcompat.widget.Toolbar>
 

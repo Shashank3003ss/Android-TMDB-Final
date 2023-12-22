@@ -31,6 +31,7 @@ public class MovieDetails extends AppCompatActivity {
         float rating = ratingBarDetails.getRating();
         vote = findViewById(R.id.textViewVote);
         OD = findViewById(R.id.textViewOD);
+        Pop = findViewById(R.id.textViewPop);
 
         GetDataFromIntent();
     }
@@ -45,14 +46,14 @@ public class MovieDetails extends AppCompatActivity {
 
                 overviewDetails.setText("Runtime : " +movieModel.getRuntime()+"mins");
                 vote.setText("Vote count : "+ movieModel.getVote_count());
-
-                OD.setText(" " + movieModel.getMovie_overview());
+                OD.setText("Release Date: " + movieModel.getRelease_date());
+                Pop.setText(movieModel.getVote_average() + "votes");
 
 //            Log.v("Tag", "X" + movieModel.getMovie_overview());
 
                 Glide.with(this)
-                        .load("https://image.tmdb.org/t/p/original/"
-                                + movieModel.getPoster_path())
+                        .load("https://image.tmdb.org/t/p/original/" + movieModel.getBackdrop_path())
+                        .error(R.drawable.default_image)
                         .into(imageViewDetails);
             }
 

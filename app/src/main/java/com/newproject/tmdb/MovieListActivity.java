@@ -109,7 +109,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         movieRecyclerViewAdapter =  new MovieRecyclerView(this);
 
         recyclerView.setAdapter(movieRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
         // Loading next pages
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

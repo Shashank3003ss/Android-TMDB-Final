@@ -12,9 +12,9 @@ import com.newproject.tmdb.R;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView title, movie_category, duration;
+//    TextView title, movie_category, duration;
     ImageView imageView;
-    RatingBar ratingBar;
+//    RatingBar ratingBar;
 
 //    Click Listener
     OnMovieListener onMovieListener;
@@ -24,7 +24,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
         this.onMovieListener = onMovieListener;
 
-        title = itemView.findViewById(R.id.movie_title);
+//        title = itemView.findViewById(R.id.movie_title);
 //        movie_category = itemView.findViewById(R.id.movie_category);
         imageView = itemView.findViewById(R.id.movie_img);
 

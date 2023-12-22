@@ -12,27 +12,17 @@
     <ImageView
         android:id="@+id/imageViewdetails"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:paddingTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/interstellar" />
 
     <LinearLayout
-        android:layout_width="859dp"
-        android:layout_height="530dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shadow"
         android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewdetails">
+        android:paddingTop="0dp">
 
         <TextView
             android:id="@+id/textView_title_details"
@@ -44,19 +34,8 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewdetails" />
+            android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textViewVote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="TextView"
-            android:textColor="#CDB9B9"
-            android:textSize="20sp" />
 
         <RatingBar
             android:id="@+id/ratingBar_details"
@@ -66,11 +45,16 @@
             android:numStars="1"
             android:progressTint="@color/yellow_star_color"
             android:scaleX="0.75"
-            android:scaleY="0.75"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_title_details" />
+            android:scaleY="0.75"/>
 
+        <TextView
+            android:id="@+id/textViewVote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView_desc_details"
@@ -78,32 +62,28 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="TextView"
-            android:textColor="#CDB9B9"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.506"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar_details"
-            app:layout_constraintVertical_bias="0.288" />
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textViewOD"
-            android:layout_width="761dp"
-            android:layout_height="143dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="5dp"
             android:text="TextView"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textViewPop"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:padding="5dp"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

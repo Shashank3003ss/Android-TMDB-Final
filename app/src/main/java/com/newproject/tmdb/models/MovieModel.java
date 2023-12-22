@@ -16,6 +16,9 @@ public class MovieModel implements Parcelable {
     private String release_date;
     private String poster_path;
 
+
+    private String original_language;
+
     @SerializedName("id")
     private int movie_id;
 
@@ -32,8 +35,7 @@ public class MovieModel implements Parcelable {
     @SerializedName("runtime")
     private int runtime;
 
-    @SerializedName("original_language")
-    private String original_language;
+
 
 //    Constructor
     public MovieModel(String title, String backdrop_path, String release_date, int movie_id, float vote_average, String movie_overview,
