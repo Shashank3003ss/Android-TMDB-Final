@@ -28,12 +28,20 @@ public interface MovieApi {
             @Query("page") int page
     );
 
+    @GET("3/movie/top_rated")
+    Call<MovieSearchResponse> getTopRated(
+            @Query("api_key")String api_key,
+            @Query("page") int page
+    );
+
+
 //    making search with id
     @GET("3/movie/{movie_id}?")
     Call<MovieModel> getMovie(
             @Path("movie_id") int movie_id,
             @Query("api_key")String api_key
             );
+
 
 
     Call<MovieSearchResponse> searchMovie(String apiKey, String action, String number);

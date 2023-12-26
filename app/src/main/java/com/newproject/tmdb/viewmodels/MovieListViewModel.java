@@ -27,12 +27,20 @@ public class MovieListViewModel extends ViewModel {
         return movieRepository.getPop();
     }
 
+    public LiveData<List<MovieModel>> getTopRated(){
+        return movieRepository.getTopRated();
+    }
+
     public void searchMovieApi(String query, int pageNumber){
         movieRepository.searchMovieApi(query, pageNumber);
     }
 
     public void searchMoviePop(int pageNumber){
         movieRepository.searchMoviePop(pageNumber);
+    }
+
+    public void searchMovieTopRated(int pageNumber){
+        movieRepository.searchMovieTopRated(pageNumber);
     }
 
     public void searchNextPage(){

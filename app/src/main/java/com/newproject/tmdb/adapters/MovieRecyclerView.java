@@ -36,28 +36,6 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
             MovieModel currentMovie = mMovies.get(position);
             MovieViewHolder movieViewHolder = (MovieViewHolder) holder;
 
-//            if (currentMovie != null) {
-//                // Set movie title
-//                if (movieViewHolder.title != null) {
-//                    movieViewHolder.title.setText(currentMovie.getTitle());
-//                }
-//
-//                // Set release date
-//                if (movieViewHolder.movie_category != null) {
-//                    movieViewHolder.movie_category.setText("" + currentMovie.getRelease_date());
-//                }
-//
-//                // Set duration
-//                if (movieViewHolder.duration != null) {
-//                    movieViewHolder.duration.setText(" " + currentMovie.getMovie_overview());
-//                }
-//
-//                // Set rating
-//                if (movieViewHolder.ratingBar != null) {
-//                    movieViewHolder.ratingBar.setRating((currentMovie.getVote_average()) / 2);
-//                }
-//            }
-            // Load image using Glide
             if (movieViewHolder.imageView != null) {
                 Glide.with(movieViewHolder.itemView.getContext())
                         .load("https://image.tmdb.org/t/p/original/" + currentMovie.getPoster_path())
@@ -71,7 +49,6 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-
         if (mMovies != null){
             return mMovies.size();
         }

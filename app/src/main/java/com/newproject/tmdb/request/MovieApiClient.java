@@ -1,5 +1,6 @@
 package com.newproject.tmdb.request;
 
+import android.content.pm.CapabilityParams;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -30,10 +31,11 @@ public class MovieApiClient {
 //    Live data for popular movies
     private MutableLiveData<List<MovieModel>> mMoviesPop;
 
-
     private RetriveMoviesRunnablePop retriveMoviesRunnablePop;
 
+    private MutableLiveData<List<MovieModel>> mMoviesTopRated;
 
+    private RetriveMoviesRunnableTopRated retriveMoviesRunnableTopRated;
 
     public static MovieApiClient getInstance() {
         if (instance == null) {
@@ -45,6 +47,7 @@ public class MovieApiClient {
     private MovieApiClient() {
         mMovies = new MutableLiveData<>();
         mMoviesPop = new MutableLiveData<>();
+        mMoviesTopRated = new MutableLiveData<>();
     }
 
 
@@ -55,6 +58,10 @@ public class MovieApiClient {
 
     public LiveData<List<MovieModel>> getMoviesPop() {
         return mMoviesPop;
+    }
+
+    public LiveData<List<MovieModel>> getMoviesTopRated() {
+        return mMoviesTopRated;
     }
 
 
@@ -89,6 +96,22 @@ public class MovieApiClient {
             }
         }, 1000, TimeUnit.MILLISECONDS);
     }
+
+    public void searchMoviesTopRated(int pageNumber){
+
+        if (retriveMoviesRunnableTopRated!=null){
+            retriveMoviesRunnableTopRated=null;
+        }
+        retriveMoviesRunnableTopRated = new RetriveMoviesRunnableTopRated(pageNumber);
+        final Future myHandler3 = AppExecutors.getInstance().networkIO().submit(retriveMoviesRunnableTopRated);
+        AppExecutors.getInstance().networkIO().schedule(new Runnable() {
+            @Override
+            public void run() {
+                myHandler3.cancel(true);
+            }
+        }, 1000, TimeUnit.MILLISECONDS);
+    }
+
 
     //Retrieving data from RestApi by runnable class
     private class RetriveMoviesRunnable implements Runnable {
@@ -163,6 +186,7 @@ public class MovieApiClient {
             this.cancelRequest = cancelRequest;
         }
 
+
         @Override
         public void run() {
             try{
@@ -211,4 +235,65 @@ public class MovieApiClient {
             cancelRequest=true;
         }
     }
+
+    private class RetriveMoviesRunnableTopRated implements Runnable {
+
+        private int pageNumber;
+        boolean cancelRequest;
+
+        public RetriveMoviesRunnableTopRated(int pageNumber) {
+            this.pageNumber = pageNumber;
+            this.cancelRequest = cancelRequest;
+        }
+
+
+        @Override
+        public void run() {
+            try{
+                Response response3 = getTopRated(pageNumber).execute();
+                if(cancelRequest){
+                    return;
+                }
+                if(response3.code()==200){
+                    List<MovieModel>list=new ArrayList<>(((MovieSearchResponse)response3.body()).getMovies());
+//                    Sending data to live data
+//                    Post value for background thread
+//                    Set value not for background thread
+                    if(pageNumber==1){
+                        mMoviesTopRated.postValue(list);
+                    }
+                    else{
+                        List<MovieModel>currentMovies=mMoviesTopRated.getValue();
+                        currentMovies.addAll(list);
+                        mMoviesTopRated.postValue(currentMovies);
+                    }
+
+                }
+                else{
+                    String  error=response3.errorBody().string();
+                    Log.v("Tag","Error"+error);
+                    mMoviesTopRated.postValue(null);
+                }
+
+            }
+            catch (IOException e){
+                e.printStackTrace();
+                mMoviesTopRated.postValue(null);
+            }
+        }
+
+        private Call<MovieSearchResponse> getTopRated(int pageNumber){
+            Service service=new Service();
+            return service.getMovieApi().getTopRated(
+                    Credentials.API_KEY,
+                    pageNumber
+            );
+
+        }
+        private void CancelRequest(){
+            Log.v("TAg","Cancelling Search Request");
+            cancelRequest=true;
+        }
+    }
+
 }

@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -15,35 +14,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.newproject.tmdb.adapters.MovieRecyclerView;
 import com.newproject.tmdb.adapters.OnMovieListener;
 import com.newproject.tmdb.models.MovieModel;
-import com.newproject.tmdb.request.Service;
-import com.newproject.tmdb.response.MovieSearchResponse;
-import com.newproject.tmdb.utils.Credentials;
-import com.newproject.tmdb.utils.MovieApi;
 import com.newproject.tmdb.viewmodels.MovieListViewModel;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
 
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
 
+    private BottomNavigationView bottomNavigationView;
+
+    private BottomNavigationItemView bottomNavigationItemView1, bottomNavigationItemView2;
+
 //    ViewModel
     private MovieListViewModel movieListViewModel;
 
     boolean isPopular = true;
+
+    boolean isTopRated = true;
+
+    boolean isUpcoming = true;
+
+    private int nextPageForPop = 1;
+    private int nextPageForTopRated = 1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,20 +52,38 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
 
+        movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationItemView1 = findViewById(R.id.action_popular);
+
+        bottomNavigationItemView2 = findViewById(R.id.action_topRated);
+
+        bottomNavigationItemView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObservePopularMovies();
+            }
+        });
+
+        bottomNavigationItemView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObserveTopRatedMovies();
+            }
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
         SetupSearchView();
         ConfigureRecyclerView();
         ObserveAnyChange();
-
         ObservePopularMovies();
-
+        
         movieListViewModel.searchMoviePop(1);
 
-//        searchMovieApi("war",1);
+        movieListViewModel.searchMovieTopRated(1);
 
     }
 
@@ -84,6 +102,22 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         });
     }
 
+    private void ObserveTopRatedMovies() {
+        movieListViewModel.getTopRated().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                // Observing for any data change
+                if (movieModels != null) {
+                    for (MovieModel movieModel : movieModels) {
+                        Log.v("Tag", "Name: " + movieModel.getTitle());
+                        movieRecyclerViewAdapter.setmMovies(movieModels);
+                    }
+                }
+            }
+        });
+
+
+    }
     //Observing any data change
     private void ObserveAnyChange(){
 
@@ -101,10 +135,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         });
     }
 
-//    private void searchMovieApi(String query, int pageNumber){
-//        movieListViewModel.searchMovieApi(query, pageNumber);
-//    }
-
     private void ConfigureRecyclerView(){
         movieRecyclerViewAdapter =  new MovieRecyclerView(this);
 
@@ -115,12 +145,31 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (!recyclerView.canScrollVertically(1)){
-                    // Display the next results from the API
-                    movieListViewModel.searchNextPage();
+                super.onScrollStateChanged(recyclerView, newState);
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+                if (lastVisible + 1 == totalItemCount) {
+                    if (isPopular) {
+                        movieListViewModel.searchMoviePop(nextPageForPop);
+                        nextPageForPop++;
+                    } else if (isTopRated) {
+                        movieListViewModel.searchMovieTopRated(nextPageForTopRated);
+                        nextPageForTopRated++;
+                    }
                 }
             }
         });
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                if (!recyclerView.canScrollVertically(1)){
+//                    // Display the next results from the API
+//                    movieListViewModel.searchNextPage();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -155,6 +204,14 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             }
         });
 
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isTopRated = false;
+            }
+        });
+
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,77 +221,5 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     }
 }
-//    private void GetRetrofitResponse() {
-//        MovieApi movieApi = Service.getMovieApi();
-//
-//        Call<MovieSearchResponse> responseCall = movieApi
-//                .searchMovie(
-//                        Credentials.API_KEY,
-//                        "Action",
-//                        "1");
-//
-//        responseCall.enqueue(new Callback<MovieSearchResponse>() {
-//            @Override
-//            public void onResponse(Call<MovieSearchResponse> call, Response<MovieSearchResponse> response) {
-//                if (response.code() == 200 ){
-//                    Log.v("Tag", "the response" + response.body().toString());
-//
-//                    List<MovieModel> movies = new ArrayList<>(response.body().getMovies());
-//
-//                    for (MovieModel movie: movies){
-//                        Log.v("Tag", "The release date" + movie.getRelease_date());
-//
-//                    }
-//                }
-//                else {
-//                    try {
-//                        Log.v("Tag", "Error" + response.errorBody().string());
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
-//
-//            }
-//        });
-//
-//
-//
-//    }
-//
-//    private void GetRetrofitResponseAccordingToID(){
-//        MovieApi movieApi = Service.getMovieApi();
-//        Call<MovieModel> responseCall = movieApi
-//                .getMovie(
-//                        343611,
-//                        Credentials.API_KEY);
-//
-//        responseCall.enqueue(new Callback<MovieModel>() {
-//            @Override
-//            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-//
-//
-//                if(response.code() == 200){
-//                    MovieModel movie = response.body();
-//                    Log.v("Tag", "The Response " + movie.getTitle());
-//                }
-//
-//                else{
-//                    try {
-//                        Log.v("Tag", "error" + response.errorBody().string());
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MovieModel> call, Throwable t) {
-//
-//            }
-//        });
-//    }
+
 

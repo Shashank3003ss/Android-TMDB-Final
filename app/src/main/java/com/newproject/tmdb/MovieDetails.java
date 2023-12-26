@@ -44,10 +44,10 @@ public class MovieDetails extends AppCompatActivity {
             if (movieModel != null){
                 titleDetails.setText(movieModel.getTitle());
 
-                overviewDetails.setText("Runtime : " +movieModel.getRuntime()+"mins");
+                overviewDetails.setText("Runtime : " +movieModel.getRuntime()+" mins");
                 vote.setText("Vote count : "+ movieModel.getVote_count());
-                OD.setText("Release Date: " + movieModel.getRelease_date());
-                Pop.setText(movieModel.getVote_average() + "votes");
+                OD.setText("Release Date : " + movieModel.getRelease_date());
+                Pop.setText("Movie ID : " + movieModel.getMovie_id());
 
 //            Log.v("Tag", "X" + movieModel.getMovie_overview());
 

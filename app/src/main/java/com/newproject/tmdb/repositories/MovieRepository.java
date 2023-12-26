@@ -37,6 +37,10 @@ public class MovieRepository {
         return movieApiClient.getMoviesPop();
     }
 
+    public LiveData<List<MovieModel>> getTopRated(){
+        return movieApiClient.getMoviesTopRated();
+    }
+
     public void searchMovieApi(String query, int pageNumber){
 
         mQuery = query;
@@ -49,6 +53,10 @@ public class MovieRepository {
         mPageNumber = pageNumber;
         movieApiClient.searchMoviesPop(pageNumber);
 
+    }
+    public void searchMovieTopRated(int pageNumber){
+        mPageNumber = pageNumber;
+        movieApiClient.searchMoviesTopRated(pageNumber);
     }
 
     public void searchNextPage(){
