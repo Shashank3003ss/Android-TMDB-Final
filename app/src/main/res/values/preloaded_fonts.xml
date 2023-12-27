@@ -2,5 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/archivo_black</item>
+        <item>@font/dela_gothic_one</item>
+        <item>@font/philosopher_bold_italic</item>
     </array>
 </resources>

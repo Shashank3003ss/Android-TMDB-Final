@@ -14,9 +14,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.newproject.tmdb.adapters.MovieRecyclerView;
 import com.newproject.tmdb.adapters.OnMovieListener;
 import com.newproject.tmdb.models.MovieModel;
@@ -29,9 +29,8 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
 
-    private BottomNavigationView bottomNavigationView;
-
-    private BottomNavigationItemView bottomNavigationItemView1, bottomNavigationItemView2;
+    private BottomNavigationItemView bottomNavigationItemView1;
+    private BottomNavigationItemView bottomNavigationItemView2;
 
 //    ViewModel
     private MovieListViewModel movieListViewModel;
@@ -39,8 +38,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     boolean isPopular = true;
 
     boolean isTopRated = true;
-
-    boolean isUpcoming = true;
 
     private int nextPageForPop = 1;
     private int nextPageForTopRated = 1;
@@ -53,7 +50,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         recyclerView = findViewById(R.id.recyclerView);
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationItemView1 = findViewById(R.id.action_popular);
 
@@ -147,29 +143,21 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+                assert layoutManager != null;
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisible = layoutManager.findLastVisibleItemPosition();
 
                 if (lastVisible + 1 == totalItemCount) {
-                    if (isPopular) {
-                        movieListViewModel.searchMoviePop(nextPageForPop);
-                        nextPageForPop++;
-                    } else if (isTopRated) {
-                        movieListViewModel.searchMovieTopRated(nextPageForTopRated);
+                    if (isTopRated) {
+                        movieListViewModel.searchMoviePop(nextPageForTopRated);
                         nextPageForTopRated++;
+                    } else if (isPopular) {
+                        movieListViewModel.searchMovieTopRated(nextPageForPop);
+                        nextPageForPop++;
                     }
                 }
             }
         });
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                if (!recyclerView.canScrollVertically(1)){
-//                    // Display the next results from the API
-//                    movieListViewModel.searchNextPage();
-//                }
-//            }
-//        });
     }
 
     @Override

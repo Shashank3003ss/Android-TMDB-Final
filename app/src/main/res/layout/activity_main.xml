@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,16 +8,42 @@
     android:layout_height="match_parent"
     tools:context=".MovieListActivity">
 
+    <ImageView
+        android:layout_width="74dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/home_icon"
+        android:paddingTop="10dp"
+        android:src="@drawable/movie"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dela_gothic_one"
+        android:gravity="center"
+        android:text="@string/tmdb"
+        android:textColor="#DD2C00"
+        android:paddingTop="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        tools:ignore="MissingConstraints" />
+
     <!-- Adding the toolbar -->
+
+    <!-- Bottom NavigationView -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="#000000"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/movie_title"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -28,11 +55,10 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:queryHint="Looking for a movie?"/>
+            app:queryHint="Looking for a movie?" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Bottom NavigationView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -50,8 +76,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:itemIconTint="@color/red"
-        app:itemTextColor="@color/red"
+        app:itemIconTint="#DD2C00"
+        app:itemTextColor="#DD2C00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

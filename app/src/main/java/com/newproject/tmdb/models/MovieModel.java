@@ -15,7 +15,6 @@ public class MovieModel implements Parcelable {
     private String backdrop_path;
     private String release_date;
     private String poster_path;
-
     private String original_language;
 
     @SerializedName("id")
@@ -27,16 +26,18 @@ public class MovieModel implements Parcelable {
     @SerializedName("vote_count")
     private int vote_count;
 
-
     @SerializedName("overview")
     private String movie_overview;
 
     @SerializedName("runtime")
     private int runtime;
 
+    @SerializedName("popularity")
+    private float popularity;
+
 //    Constructor
     public MovieModel(String title, String backdrop_path, String release_date, int movie_id, float vote_average, String movie_overview,
-         String original_language, int runtime, int vote_count, String poster_path, int popularity) {
+         String original_language, int runtime, int vote_count, String poster_path, float popularity) {
         this.title = title;
         this.backdrop_path = backdrop_path;
         this.poster_path = poster_path;
@@ -61,6 +62,7 @@ public class MovieModel implements Parcelable {
         runtime = in.readInt();
         vote_count = in.readInt();
         original_language = in.readString();
+        popularity = in.readFloat();
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -114,6 +116,10 @@ public class MovieModel implements Parcelable {
         return poster_path;
     }
 
+    public float getPopularity() {
+        return popularity;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -131,6 +137,7 @@ public class MovieModel implements Parcelable {
         dest.writeString(movie_overview);
         dest.writeInt(vote_count);
         dest.writeString(original_language);
+        dest.writeFloat(popularity);
     }
 
     @Override
@@ -140,12 +147,13 @@ public class MovieModel implements Parcelable {
                 ", backdrop_path='" + backdrop_path + '\'' +
                 ", release_date='" + release_date + '\'' +
                 ", poster_path='" + poster_path + '\'' +
+                ", original_language='" + original_language + '\'' +
                 ", movie_id=" + movie_id +
-                ", vote_count=" + vote_count +
                 ", vote_average=" + vote_average +
+                ", vote_count=" + vote_count +
                 ", movie_overview='" + movie_overview + '\'' +
                 ", runtime=" + runtime +
-                ", original_language='" + original_language + '\'' +
+                ", popularity=" + popularity +
                 '}';
     }
 }
