@@ -35,9 +35,9 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 //    ViewModel
     private MovieListViewModel movieListViewModel;
 
-    boolean isPopular = true;
+    boolean isPopular ;
 
-    boolean isTopRated = true;
+    boolean isTopRated ;
 
     private int nextPageForPop = 1;
     private int nextPageForTopRated = 1;
@@ -59,6 +59,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             @Override
             public void onClick(View v) {
                 ObservePopularMovies();
+                isPopular = true;
             }
         });
 
@@ -66,6 +67,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             @Override
             public void onClick(View v) {
                 ObserveTopRatedMovies();
+                isTopRated = true;
             }
         });
 
@@ -135,7 +137,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         movieRecyclerViewAdapter =  new MovieRecyclerView(this);
 
         recyclerView.setAdapter(movieRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
         // Loading next pages
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -149,10 +151,10 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
                 if (lastVisible + 1 == totalItemCount) {
                     if (isTopRated) {
-                        movieListViewModel.searchMoviePop(nextPageForTopRated);
+                        movieListViewModel.searchMovieTopRated(nextPageForTopRated);
                         nextPageForTopRated++;
                     } else if (isPopular) {
-                        movieListViewModel.searchMovieTopRated(nextPageForPop);
+                        movieListViewModel.searchMoviePop(nextPageForPop);
                         nextPageForPop++;
                     }
                 }
