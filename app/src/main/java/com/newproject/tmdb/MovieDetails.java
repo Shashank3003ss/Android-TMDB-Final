@@ -64,8 +64,6 @@ public class MovieDetails extends AppCompatActivity {
                 ov.setText("OverView : " + movieModel.getMovie_overview());
             }
 
-
-
         }
 
     }

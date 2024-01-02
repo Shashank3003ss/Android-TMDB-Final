@@ -17,6 +17,7 @@ public class MovieRepository {
 
     private String mQuery;
     private int mPageNumber;
+    private int movieId;
 
     public static MovieRepository getInstance(){
         if(instance == null){
@@ -25,7 +26,7 @@ public class MovieRepository {
         return instance;
 
     }
-    private MovieRepository(){
+    public MovieRepository(){
       movieApiClient = MovieApiClient.getInstance();
     }
 
@@ -64,8 +65,14 @@ public class MovieRepository {
 
     }
 
+    public void fetchMovieDetails(int movieId, MovieRepository.OnMovieDetailsListener failedToFetchMovieDetails) {
 
+        this.movieId = movieId;
+    }
 
+    public interface OnMovieDetailsListener {
+        void onDetailsFetched(MovieModel movieDetails);
+    }
 }
 
 

@@ -2,6 +2,7 @@ package com.newproject.tmdb;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+//import androidx.appcompat.widget.AbsActionBarView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -78,7 +79,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         ConfigureRecyclerView();
         ObserveAnyChange();
         ObservePopularMovies();
-        
+
         movieListViewModel.searchMoviePop(1);
 
         movieListViewModel.searchMovieTopRated(1);
@@ -176,6 +177,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     }
 
+
     private void SetupSearchView(){
         final SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -212,4 +214,67 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     }
 }
 
+//public class MovieListActivity extends AppCompatActivity implements MovieListContract.View, onMovieListener{
+//
+//    private MovieModel movie;
+//    private List<MovieModel> movies;
+//    private AbsActionBarView progressBar;
+//
+//    public MovieListActivity() {
+//    }
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//
+//        // ... your existing code
+//
+//        MovieListPresenter presenter = new MovieListPresenter(this, new MovieListModel());
+//
+//        // ... rest of your code
+//    }
+//
+//    @Override
+//    public void showProgress() {
+//        progressBar.setVisibility(View.VISIBLE);
+//    }
+//
+//    @Override
+//    public void hideProgress() {
+//
+//    }
+//
+//    @Override
+//    public void displayMovies(List<MovieModel> movies) {
+//
+//    }
+//
+//    @Override
+//    public void showError(String message) {
+//
+//    }
+//
+//    @Override
+//    public void navigateToMovieDetails(MovieModel movie) {
+//
+//    }
+//
+//    @Override
+//    public MovieModel getSelectedMovie(int position) {
+//        return null;
+//    }
+//
+//    @Override
+//    public void onMovieClick(int position) {
+//        MovieRecyclerView movieRecyclerViewAdapter = null;
+//        movieRecyclerViewAdapter.setmMovies(movies);
+//    }
+//
+//
+//    @Override
+//    public void onCategoryClick(String category) {
+//
+//    }
+//}
 

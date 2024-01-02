@@ -23,6 +23,8 @@ public class MovieModel implements Parcelable {
     @SerializedName("vote_average")
     private float vote_average;
 
+
+
     @SerializedName("vote_count")
     private int vote_count;
 
