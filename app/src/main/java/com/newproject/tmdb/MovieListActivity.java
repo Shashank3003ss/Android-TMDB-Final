@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,24 +26,19 @@ import com.newproject.tmdb.viewmodels.MovieListViewModel;
 
 import java.util.List;
 
-public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
+public class MovieListActivity extends AppCompatActivity implements MovieListView, OnMovieListener {
+
+    private MovieListPresenter presenter;
 
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
-
-    private BottomNavigationView bottomNavigationView;
-
     private BottomNavigationItemView bottomNavigationItemView1, bottomNavigationItemView2;
 
+    private ProgressBar progressBar;
 //    ViewModel
     private MovieListViewModel movieListViewModel;
-
     boolean isPopular = true;
-
     boolean isTopRated = true;
-
-    boolean isUpcoming = true;
-
     private int nextPageForPop = 1;
     private int nextPageForTopRated = 1;
 
@@ -53,20 +49,16 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
 
+        presenter = new MovieListPresenter(this, new MovieListModel());
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         bottomNavigationItemView1 = findViewById(R.id.action_popular);
-
         bottomNavigationItemView2 = findViewById(R.id.action_topRated);
-
         bottomNavigationItemView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ObservePopularMovies();
             }
         });
-
         bottomNavigationItemView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,18 +66,19 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             }
         });
 
+        progressBar = findViewById(R.id.progressBar);
+        presenter.getPopularMovies(1);
+        presenter.getTopRatedMovies(1);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         SetupSearchView();
         ConfigureRecyclerView();
         ObserveAnyChange();
         ObservePopularMovies();
 
         movieListViewModel.searchMoviePop(1);
-
         movieListViewModel.searchMovieTopRated(1);
-
     }
 
     private void ObservePopularMovies() {
@@ -162,20 +155,10 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
                 }
             }
         });
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                if (!recyclerView.canScrollVertically(1)){
-//                    // Display the next results from the API
-//                    movieListViewModel.searchNextPage();
-//                }
-//            }
-//        });
     }
 
     @Override
     public void onMovieClick(int position) {
-//        Toast.makeText(this, "The position " + position, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MovieDetails.class);
         intent.putExtra("movie", movieRecyclerViewAdapter.getSelectedMovie(position));
         startActivity(intent);
@@ -186,7 +169,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     public void onCategoryClick(String category) {
 
     }
-
 
     private void SetupSearchView(){
         final SearchView searchView = findViewById(R.id.search_view);
@@ -222,69 +204,39 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         });
 
     }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void diplayMovies(List<MovieModel> movies) {
+        movieRecyclerViewAdapter.setmMovies(movies);
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void navigateToMovieDetails(MovieModel movie) {
+        Intent intent = new Intent(this, MovieDetails.class);
+        intent.putExtra("movie", movie);
+        startActivity(intent);
+    }
+
+    @Override
+    public void displayMovies(List<MovieModel> popularMovies) {
+
+    }
 }
 
-//public class MovieListActivity extends AppCompatActivity implements MovieListContract.View, onMovieListener{
-//
-//    private MovieModel movie;
-//    private List<MovieModel> movies;
-//    private AbsActionBarView progressBar;
-//
-//    public MovieListActivity() {
-//    }
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        // ... your existing code
-//
-//        MovieListPresenter presenter = new MovieListPresenter(this, new MovieListModel());
-//
-//        // ... rest of your code
-//    }
-//
-//    @Override
-//    public void showProgress() {
-//        progressBar.setVisibility(View.VISIBLE);
-//    }
-//
-//    @Override
-//    public void hideProgress() {
-//
-//    }
-//
-//    @Override
-//    public void displayMovies(List<MovieModel> movies) {
-//
-//    }
-//
-//    @Override
-//    public void showError(String message) {
-//
-//    }
-//
-//    @Override
-//    public void navigateToMovieDetails(MovieModel movie) {
-//
-//    }
-//
-//    @Override
-//    public MovieModel getSelectedMovie(int position) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void onMovieClick(int position) {
-//        MovieRecyclerView movieRecyclerViewAdapter = null;
-//        movieRecyclerViewAdapter.setmMovies(movies);
-//    }
-//
-//
-//    @Override
-//    public void onCategoryClick(String category) {
-//
-//    }
-//}
 

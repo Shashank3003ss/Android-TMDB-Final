@@ -3,12 +3,13 @@ package com.newproject.tmdb.repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.newproject.tmdb.MovieListContract;
 import com.newproject.tmdb.models.MovieModel;
 import com.newproject.tmdb.request.MovieApiClient;
 
 import java.util.List;
 
-public class MovieRepository {
+public class MovieRepository implements MovieListContract.Model {
 //    This class is acting as repositories
 
     private static MovieRepository instance;
@@ -69,6 +70,23 @@ public class MovieRepository {
 
         this.movieId = movieId;
     }
+
+    @Override
+    public void getPopularMovies(int page, OnFinishedListener listener) {
+
+    }
+
+    @Override
+    public void getTopRatedMovies(int page, OnFinishedListener listener) {
+
+    }
+
+    @Override
+    public void searchMovies(String query, int page, OnFinishedListener listener) {
+
+    }
+
+
 
     public interface OnMovieDetailsListener {
         void onDetailsFetched(MovieModel movieDetails);

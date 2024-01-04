@@ -4,61 +4,37 @@ import com.newproject.tmdb.models.MovieModel;
 
 import java.util.List;
 
-public class MovieListPresenter implements MovieListContract.Presenter, MovieListContract.Model.OnFinishedListener {
+public class MovieListPresenter {
 
-    private MovieListContract.View view;
-    private MovieListContract.Model model;
+    private MovieListView view;
+    private MovieListModel model;
 
-    public MovieListPresenter(MovieListContract.View view, MovieListContract.Model model) {
+    public MovieListPresenter(MovieListView view, MovieListModel model){
         this.view = view;
         this.model = model;
     }
 
-    @Override
-    public void getPopularMovies(int page) {
+    public void getPopularMovies(int page){
         view.showProgress();
-        model.getPopularMovies(page, this);
+        List<MovieModel> popularMovies = model.fetchPopularMovies(page);
+        if (popularMovies != null && !popularMovies.isEmpty()){
+            view.displayMovies(popularMovies);
+        }
+        else {
+            view.showError("Failed to fetch popular movies");
+        }
+        view.hideProgress();
     }
 
-    @Override
-    public void getTopRatedMovies(int page) {
+    public void getTopRatedMovies(int page){
         view.showProgress();
-        model.getTopRatedMovies(page, this);
-    }
-
-    @Override
-    public void searchMovies(String query, int page) {
-        view.showProgress();
-        model.searchMovies(query, page, this);
-    }
-
-    @Override
-    public void onMoviesFetched(List<MovieModel> movies) {
+        List<MovieModel> topRatedMovies = model.fetchTopRatedMovies(page);
+        if (topRatedMovies != null && !topRatedMovies.isEmpty()){
+            view.displayMovies(topRatedMovies);
+        }
+        else {
+            view.showError("Failed to fetch top rated movies");
+        }
         view.hideProgress();
-        view.displayMovies(movies);
-    }
-
-    @Override
-    public void onSearchMoviesFetched(List<MovieModel> movies) {
-        view.hideProgress();
-        view.displayMovies(movies);
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        view.hideProgress();
-        view.showError(errorMessage);
-    }
-
-    @Override
-    public void onMovieClick(int position) {
-        // Assuming you have a method to get the selected movie from the adapter
-        MovieModel selectedMovie = view.getSelectedMovie(position);
-        view.navigateToMovieDetails(selectedMovie);
-    }
-
-    @Override
-    public void onDestroy() {
-        view = null;
     }
 }

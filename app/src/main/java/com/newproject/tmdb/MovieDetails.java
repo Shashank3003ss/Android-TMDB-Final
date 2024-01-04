@@ -55,6 +55,7 @@ public class MovieDetails extends AppCompatActivity {
                         .load("https://image.tmdb.org/t/p/original/" + movieModel.getBackdrop_path())
                         .error(R.drawable.default_image)
                         .into(imageViewDetails);
+
             }
 
         }

@@ -6,10 +6,11 @@ public interface MovieDetailContract {
 
     interface View {
         void displayMovieDetails(MovieModel movie);
+
         void showError(String message);
 
         default void showProgress() {
-            
+
         }
 
         void hideProgress();
@@ -18,12 +19,14 @@ public interface MovieDetailContract {
 
     interface Presenter {
         void getMovieDetails(int movieId);
+
         void onDestroy();
     }
 
     interface Model {
         interface OnFinishedListener {
             void onMovieDetailsFetched(MovieModel movie);
+
             void onError(String errorMessage);
         }
 

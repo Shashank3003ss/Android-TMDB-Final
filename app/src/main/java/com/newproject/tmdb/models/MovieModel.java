@@ -15,7 +15,6 @@ public class MovieModel implements Parcelable {
     private String backdrop_path;
     private String release_date;
     private String poster_path;
-
     private String original_language;
 
     @SerializedName("id")
@@ -24,11 +23,8 @@ public class MovieModel implements Parcelable {
     @SerializedName("vote_average")
     private float vote_average;
 
-
-
     @SerializedName("vote_count")
     private int vote_count;
-
 
     @SerializedName("overview")
     private String movie_overview;
